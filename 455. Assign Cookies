@@ -1,6 +1,6 @@
-Question: https://leetcode.com/problems/assign-cookies/
+/*Question: https://leetcode.com/problems/assign-cookies/
 Approach : Sort and Two pointer
-
+*/
 class Solution {
 public:
   int findContentChildren(vector<int>& g, vector<int>& s) {
