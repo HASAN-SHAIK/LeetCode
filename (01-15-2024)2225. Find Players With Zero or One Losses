@@ -1,0 +1,27 @@
+Question: https://leetcode.com/problems/find-players-with-zero-or-one-losses/
+Approach : Map
+class Solution {
+public:
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+       unordered_map<int,int> ele,loss;
+       unordered_set<int,int> s;
+       for(int i=0;i<matches.size();i++){
+           loss[matches[i][1]]++;
+            ele[matches[i][0]]=1;
+            ele[matches[i][1]]=1;
+       }
+       vector<int> zeroLoss, oneLoss;
+       for(auto i: ele){
+           if(loss[i.first]==0)
+           zeroLoss.push_back(i.first);
+           if(loss[i.first]==1)
+           oneLoss.push_back(i.first);
+       }
+       sort(zeroLoss.begin(),zeroLoss.end());
+       sort(oneLoss.begin(),oneLoss.end());
+       vector<vector<int>> ans;
+       ans.push_back(zeroLoss);
+       ans.push_back(oneLoss);
+       return ans;
+    }
+};
