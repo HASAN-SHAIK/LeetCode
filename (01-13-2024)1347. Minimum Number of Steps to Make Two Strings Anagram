@@ -1,0 +1,30 @@
+Question: https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/
+Approach: map and math
+
+class Solution {
+public:
+    int minSteps(string s, string t) {
+        unordered_map<char,int> sm,tm;
+        int count = 0;
+        for(int i=0;i<s.length();i++)
+        sm[s[i]]++;
+        for(int j=0;j<t.length();j++)
+        tm[t[j]]++;
+        int f=0;
+        for(int i=0;i<t.length();i++){
+            for(auto j: sm){
+                if(t[i] == j.first){
+                    j.second--;
+                }
+                else if(t[i] != j.first && f==sm.size()){
+                    count++;
+                    f=0;
+                }
+                else{
+                    f++;
+                }
+            }
+        }
+        return count;
+    }
+};
