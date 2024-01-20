@@ -1,0 +1,59 @@
+Question: https://leetcode.com/problems/unique-number-of-occurrences/
+Approach:  Map
+
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map <int,int> m;
+        int n= arr.size();
+        for(int i=0;i<n;i++){
+            m[arr[i]]++;
+        }
+        unordered_map <int,int> m1;
+       for(auto i: m){
+           if(m1[i.second]!=0)
+           return  false;
+           m1[i.second]=1;
+       }
+        return true;
+    }
+};
+
+
+Approach: Two Pointer
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+       sort(arr.begin(),arr.end());
+        int x=0;
+        vector<int> v;
+        int n= arr.size();
+        for(int p1 = 0,p2=0; p1 < n && p2 < n; ){
+            for( p2 = p1;p2<n;p2++)
+                if(arr[p1]==arr[p2])
+                x++;
+                else{
+                    v.push_back(x);
+                    x=0;
+                    p1=p2;
+                    break;
+                }
+                if(p2==n-1){
+                    v.push_back(x+1);
+                    p1=n-1;
+                    break;
+                }
+            }
+        unordered_map <int,int> m;
+        n= v.size();
+        for(int i=0;i<n;i++){
+            cout<<v[i]<<" ";
+            m[v[i]]++;
+        }
+       for(auto i: m){
+           if(i.second>1)
+           return false;
+       }
+        return true;
+    }
+};
