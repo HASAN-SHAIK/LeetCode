@@ -1,0 +1,37 @@
+Question: https://leetcode.com/problems/determine-if-two-strings-are-close/
+Approach: map and math
+
+class Solution {
+public:
+    bool closeStrings(string word1, string word2) {
+        unordered_map<char, int> w1,w2;
+        for(int i=0;i<word1.length();i++)
+        w1[word1[i]]++;
+        for(int i=0;i<word2.length();i++)
+        w2[word2[i]]++;
+        for(auto i: w1){
+            if(w2[i.first]==0)
+            return false;
+        }
+        for(auto i: w1){
+            int check=1;
+            if(i.second == w2[i.first]){
+            i.second = 0;
+            w2[i.first] = 0;
+            check = 0;
+            }
+            else{
+                for(auto j: w2){
+                if(i.second == j.second){
+                    i.second = 0;
+                    j.second= 0;
+                    check=0;
+                }
+            }
+        }
+        if(check==1)
+        return false;
+        }
+        return true;
+    }
+};
