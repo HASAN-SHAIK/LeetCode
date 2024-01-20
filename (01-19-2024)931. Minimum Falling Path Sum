@@ -1,0 +1,45 @@
+Question: https://leetcode.com/problems/minimum-falling-path-sum/
+Approach: DP
+[1,2,3]  [1,2,3]
+[2,4,6]  [3,5,8]
+[4,5,2]  [7,8,7] --> (Ans 7)
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        for(int i=1;i<matrix.size();i++){
+            for(int j=0;j<matrix.size();j++){
+                matrix[i][j] += min({matrix[i-1][j], matrix[i-1][max(0,j-1)] , matrix[i-1][min(j+1,(int)matrix.size()-1)]});
+            }
+        }
+        return *min_element(begin(matrix[matrix.size()-1]),end(matrix[matrix.size()-1]));
+    }
+};
+
+Approach: Recursion and DP
+
+#include<limits.h>
+class Solution {
+public:
+    unordered_map<int,int> m;
+    int minFailingSum(int row, int col, vector<vector<int>>&matrix){
+        int n=matrix.size();
+        if(row>=matrix.size())
+        return 0;
+        if(col>=matrix.size()|| col<0)
+        return INT_MAX;
+        if(m.count(row*n+col)>0)
+        return m[row*n+col];
+        int index = row*n+col;
+        m[index] =matrix[row][col]+ min(minFailingSum(row+1,col,matrix),min(minFailingSum(row+1,col-1,matrix),minFailingSum(row+1,col+1,matrix)));
+        return m[index];
+    } 
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int min =INT_MAX;
+        for(int i=0;i<matrix.size();i++){
+            int sum = minFailingSum(0,i,matrix);
+            if(sum<min)
+            min = sum;
+        }
+        return min;
+    }
+};
