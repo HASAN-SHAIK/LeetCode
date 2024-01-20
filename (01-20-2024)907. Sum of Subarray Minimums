@@ -1,0 +1,36 @@
+Question: https://leetcode.com/problems/sum-of-subarray-minimums/
+Approach: Recursion and Math
+
+class Solution {
+public:
+    int getMinIdx(vector<int> &arr, int low,int high){
+        int min = arr[low],idx =low;
+        for(int i=low;i<=high;i++){
+            if(min>arr[i]){
+                min = arr[i];
+                idx = i;
+            }
+        }
+        return idx;
+    }
+    int getSum(vector<int> &arr, int low, int high, int sum){
+        if(high<low)
+        return sum%1000000007;
+        sum = sum%1000000007;
+        int minIdx = getMinIdx(arr,low,high);
+        int size= high-low+1;
+        if(high-low==0)
+        sum+= arr[minIdx];
+        else{
+        sum+= ((((arr[minIdx]*(minIdx-low))%1000000007)*(high-minIdx+1))%1000000007+(arr[minIdx]*(high-minIdx))%1000000007+arr[minIdx])%1000000007;
+        }
+        sum = sum%1000000007;
+        sum = getSum(arr,low,minIdx-1,sum)%1000000007;
+        sum = getSum(arr,minIdx+1,high,sum)%1000000007;
+        return sum%1000000007;
+    }
+    int sumSubarrayMins(vector<int>& arr) {
+        int sum = getSum(arr,0,arr.size()-1,0);
+        return sum%1000000007;
+    }
+};
