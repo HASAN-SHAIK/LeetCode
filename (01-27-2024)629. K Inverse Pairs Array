@@ -1,0 +1,30 @@
+Question: https://leetcode.com/problems/k-inverse-pairs-array/
+
+class Solution {
+public:
+    int a[1000][1000];
+    int getCount(int n, int k){
+        if(k==0)
+        return 1;
+        if(k<0||n==0)
+        return 0;
+        if(n<k)
+        return 0;
+        int count=0;
+        cout<<n<<" "<<k<<endl;
+        if(a[n][k]!=-1)
+        return a[n][k];
+        for(int i=0;i<n;i++){
+            count+= getCount(n-1,k-i);
+        }
+        a[n][k] = count;
+        return a[n][k];
+    }
+    int kInversePairs(int n, int k) {
+        for(int i=0;i<1000;i++){
+            for(int j=0;j<1000;j++)
+            a[i][j] = -1;
+        }
+        return getCount(n,k);
+    }
+};
