@@ -1,0 +1,26 @@
+Question: https://leetcode.com/problems/sequential-digits/
+
+#include<string>
+class Solution {
+public:
+    vector<int> sequentialDigits(int low, int high) {
+        string s = "123456789";
+        vector<int> answer;
+        string slow = to_string(low);
+        string shigh = to_string(high);
+        for(int i=slow.length();i<=shigh.length();i++){
+            for(int j=0;j<=s.length()-i;j++){
+            string ans = s.substr(j,i);
+            cout<<ans<<" ";
+            if(ans.length()>=9)
+            break;
+            int res = stoi(ans);
+            if(res>=low&&res<=high)
+            answer.push_back(res);
+            }
+        }
+        if(high>=123456789&&low<=123456789)
+        answer.push_back(123456789);
+        return answer;
+    }
+};
