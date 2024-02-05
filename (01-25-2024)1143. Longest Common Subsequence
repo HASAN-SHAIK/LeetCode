@@ -1,0 +1,32 @@
+Question: https://leetcode.com/problems/longest-common-subsequence/
+
+class Solution {
+public:
+    unordered_map<int,int> m;
+    int check(int ch, string s){
+        for(int i=0;i<s.length();i++){
+            if(s[i]==ch)
+            return i+1;
+        }
+        return 0;
+    }
+    int get(string s1,int idx1,string s2,int idx2){
+        if(idx1==s1.length()||s2.length()==0)
+        return 0;
+        if(m.count(idx1*10000+idx2)>0) return m[idx1*10000+idx2];
+        int idx = check(s1[idx1],s2);
+        if(idx==0){
+            cout<<"Not Found: "<<s1[idx1]<<" "<<s2<<endl;
+            m[idx1*10000+idx2]=get(s1,idx1+1,s2,idx2);
+        }
+        else{
+            cout<<"Considering: "<<s1[idx1]<<" "<<s2.substr(idx)<<endl;
+            cout<<"Not considering: "<<s1[idx1]<<" "<<s2<<endl;
+            m[idx1*10000+idx2] = max(1+get(s1,idx1+1,s2.substr(idx),idx), get(s1,idx1+1,s2,idx2));
+        }
+        return m[idx1*10000+idx2];
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+           return get(text1,0,text2,0);
+    }
+};
